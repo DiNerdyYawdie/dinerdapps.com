@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dinerdapps.com/sitemap.xml

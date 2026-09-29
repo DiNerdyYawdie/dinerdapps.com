@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Di Nerd Apps — Native iOS apps by Chad Muirhead</title>
+<meta name="description" content="Di Nerd Apps is the independent iOS studio of Chad Muirhead: 60+ native apps for iPhone, iPad, Apple TV and iMessage — civic tools, AI apps and Caribbean-inspired games.">
+<meta name="theme-color" content="#f4f7f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#07100e" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://dinerdapps.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Di Nerd Apps — Native iOS apps by Chad Muirhead">
+<meta property="og:description" content="60+ apps shipped for iPhone, iPad, Apple TV and iMessage. Civic tools, AI features and Caribbean culture.">
+<meta property="og:url" content="https://dinerdapps.com/">
+<meta property="og:image" content="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/9d/95/b09d9597-a0f3-d4bc-7343-7d2b767ac958/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg">
+<meta name="twitter:card" content="summary">
+<style>:root{
+  --bg:#f4f7f6; --ink:#0c1614; --ink-2:#56625f; --ink-3:#8a9592;
+  --accent:#0a9a6c; --accent-2:#0a7c8c; --gold:#f2b705;
+  --glass:rgba(255,255,255,.58); --glass-strong:rgba(255,255,255,.78);
+  --stroke:rgba(255,255,255,.85); --edge:rgba(12,22,20,.07);
+  --shadow:0 1px 1px rgba(12,22,20,.04),0 8px 24px -8px rgba(12,22,20,.12),0 24px 60px -24px rgba(12,22,20,.18);
+  --hi:inset 0 1px 0 rgba(255,255,255,.9);
+  --r:26px; --r-sm:16px;
+  --b1:#6fe3b8; --b2:#8fd3ff; --b3:#ffe28a;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#07100e; --ink:#eef4f2; --ink-2:#a7b3b0; --ink-3:#72807c;
+  --accent:#2fd39a; --accent-2:#39b8c9;
+  --glass:rgba(30,40,38,.46); --glass-strong:rgba(34,46,43,.7);
+  --stroke:rgba(255,255,255,.12); --edge:rgba(255,255,255,.06);
+  --shadow:0 1px 1px rgba(0,0,0,.3),0 12px 32px -10px rgba(0,0,0,.55);
+  --hi:inset 0 1px 0 rgba(255,255,255,.1);
+  --b1:#0c6b4f; --b2:#0d4c6b; --b3:#5b4a0c;
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+h1,h2,h3{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",sans-serif;letter-spacing:-.025em;line-height:1.08}
+
+/* ambient background */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55}
+.b1{width:52vw;height:52vw;background:var(--b1);top:-18vw;left:-12vw}
+.b2{width:46vw;height:46vw;background:var(--b2);top:10vh;right:-16vw}
+.b3{width:40vw;height:40vw;background:var(--b3);bottom:-18vw;left:24vw;opacity:.4}
+@media (prefers-reduced-motion:no-preference){.b1{animation:drift 26s ease-in-out infinite alternate}.b2{animation:drift 32s ease-in-out infinite alternate-reverse}}
+@keyframes drift{to{transform:translate(6vw,4vh) scale(1.08)}}
+
+/* glass material */
+.glass{background:var(--glass);-webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--stroke);box-shadow:var(--hi),var(--shadow);border-radius:var(--r)}
+
+.container{width:min(1120px,100% - 32px);margin-inline:auto}
+.section{padding-block:clamp(56px,9vw,104px) 0}
+.section-head{margin-bottom:24px;max-width:620px}
+.section-head h2{font-size:clamp(30px,4.4vw,44px);font-weight:700}
+.section-head p{color:var(--ink-2);margin-top:8px;font-size:17px}
+
+/* nav */
+.nav-wrap{position:sticky;top:12px;z-index:10;padding-inline:16px}
+.nav{max-width:1120px;margin:12px auto 0;display:flex;align-items:center;gap:16px;padding:8px 8px 8px 14px;border-radius:999px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:650;letter-spacing:-.01em}
+.brand svg{width:30px;height:30px;flex:none}
+.links{display:flex;gap:4px;margin-left:auto}
+.links a{padding:8px 14px;border-radius:999px;color:var(--ink-2);font-size:15px;transition:background .2s,color .2s}
+.links a:hover{background:var(--glass-strong);color:var(--ink)}
+@media (max-width:640px){.links{display:none}.nav .btn-sm{margin-left:auto}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:999px;font-weight:600;font-size:16px;color:#fff;background:linear-gradient(180deg,var(--accent),var(--accent-2));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 20px -8px color-mix(in srgb,var(--accent) 70%,transparent);transition:transform .15s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:scale(.98)}
+.btn-sm{height:38px;padding:0 16px;font-size:14px}
+.btn-ghost{color:var(--ink);background:var(--glass-strong);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid var(--stroke);box-shadow:var(--hi),0 4px 14px -6px rgba(0,0,0,.12)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.cta.center{justify-content:center}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:32px;padding-top:clamp(48px,9vw,110px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--accent);text-transform:uppercase}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 20%,transparent)}
+h1{font-size:clamp(42px,7vw,76px);font-weight:750;margin-top:14px}
+.grad{background:linear-gradient(100deg,var(--accent) 10%,var(--accent-2) 60%,#c9a200);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:clamp(17px,1.6vw,19px);color:var(--ink-2);margin-top:20px;max-width:560px}
+.hero-art{position:relative;aspect-ratio:1;max-width:440px;width:100%;justify-self:center}
+.f{position:absolute;width:24%;aspect-ratio:1;border-radius:23%;overflow:hidden;box-shadow:0 18px 40px -14px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.5);background:var(--glass-strong)}
+.f img{width:100%;height:100%;object-fit:cover}
+.f0{width:34%;left:33%;top:33%;z-index:2}
+.f1{left:6%;top:10%}.f2{left:66%;top:4%}.f3{left:80%;top:44%;width:19%}
+.f4{left:62%;top:74%}.f5{left:16%;top:70%;width:20%}.f6{left:0;top:42%;width:18%}.f7{left:38%;top:0;width:17%}
+@media (prefers-reduced-motion:no-preference){.f{animation:float 7s ease-in-out infinite}.f:nth-child(2n){animation-duration:9s;animation-delay:-2s}.f:nth-child(3n){animation-delay:-4s}}
+@keyframes float{50%{transform:translateY(-10px)}}
+@media (max-width:860px){.hero{grid-template-columns:1fr}.hero-art{max-width:340px;order:-1;margin-bottom:-8px}}
+
+/* stats */
+.stats-wrap{margin-top:clamp(40px,6vw,72px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);padding:22px 8px}
+.stats div{text-align:center;padding:4px 8px}
+.stats div+div{border-left:1px solid var(--edge)}
+.stats dt{font-size:clamp(26px,3.4vw,36px);font-weight:700;letter-spacing:-.03em}
+.stats dd{color:var(--ink-2);font-size:14px}
+@media (max-width:640px){.stats{grid-template-columns:1fr 1fr;row-gap:16px}.stats div:nth-child(3){border-left:0}}
+
+/* featured */
+.feature{margin-top:20px}
+.feature-card{display:flex;gap:28px;align-items:center;padding:28px;transition:transform .25s}
+.feature-card:hover{transform:translateY(-2px)}
+.feature-icon{width:128px;height:128px;border-radius:29px;flex:none;box-shadow:0 14px 30px -12px rgba(0,0,0,.35)}
+.feature-card h2{font-size:clamp(24px,3vw,32px);margin:6px 0 8px}
+.feature-card p{color:var(--ink-2);max-width:640px}
+.feature-card strong{color:var(--ink)}
+.link-arrow{display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:var(--accent);font-weight:600}
+.link-arrow::after{content:"→";transition:transform .2s}
+a:hover .link-arrow::after,.link-arrow:hover::after{transform:translateX(3px)}
+@media (max-width:640px){.feature-card{flex-direction:column;align-items:flex-start;padding:22px}.feature-icon{width:88px;height:88px;border-radius:20px}}
+
+/* chips */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;margin-bottom:8px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:inherit;font-size:14px;font-weight:550;color:var(--ink-2);padding:9px 16px;border-radius:999px;border:1px solid var(--stroke);background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);cursor:pointer;transition:all .2s}
+.chip:hover{color:var(--ink)}
+.chip.is-on{color:#fff;background:var(--ink);border-color:transparent}
+@media (prefers-color-scheme:dark){.chip.is-on{color:var(--bg)}}
+
+/* app grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.app{display:flex;gap:16px;align-items:flex-start;padding:18px;position:relative;transition:transform .25s,box-shadow .25s}
+.app:hover{transform:translateY(-3px)}
+.app[hidden]{display:none}
+.icon{width:72px;height:72px;border-radius:17px;flex:none;overflow:hidden;position:relative;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 8px 18px -8px rgba(0,0,0,.35),0 0 0 .5px rgba(0,0,0,.08)}
+.icon::before{content:attr(data-initials);position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:700;font-size:22px}
+.icon img{position:relative;width:100%;height:100%;object-fit:cover}
+.app-body{min-width:0;flex:1}
+.app h3{font-size:17px;letter-spacing:-.01em}
+.app p{color:var(--ink-2);font-size:14.5px;margin-top:4px;line-height:1.45}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.plats{display:flex;flex-wrap:wrap;gap:6px}
+.plats li{font-size:11.5px;font-weight:600;color:var(--ink-2);padding:3px 9px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--edge)}
+.rating{font-size:12.5px;font-weight:600;color:#b98a00}
+.rating small{color:var(--ink-3);font-weight:500}
+@media (prefers-color-scheme:dark){.rating{color:var(--gold)}}
+.get{align-self:center;flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:0;transition:transform .2s}
+.get::after{content:'';width:7px;height:7px;border:solid currentColor;border-width:2px 2px 0 0;transform:translateX(-1px) rotate(45deg)}
+.app:hover .get{transform:translateX(2px)}
+.more{margin-top:20px;text-align:center}
+@media (max-width:400px){.grid{grid-template-columns:1fr}.app{padding:16px}.icon{width:60px;height:60px;border-radius:14px}}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.svc{padding:24px}
+.svc-ico{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(180deg,var(--accent),var(--accent-2));margin-bottom:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.svc-ico svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.svc h3{font-size:18px}
+.svc p{color:var(--ink-2);font-size:15px;margin-top:6px}
+@media (max-width:980px){.services{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.services{grid-template-columns:1fr}}
+
+/* about */
+.about{padding:clamp(24px,4vw,44px)}
+.about h2{font-size:clamp(30px,4.4vw,44px);margin-bottom:14px}
+.about p{color:var(--ink-2);font-size:17px;max-width:720px}
+.about p+p{margin-top:12px}
+.about strong{color:var(--ink)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tags li{font-size:13px;font-weight:550;padding:6px 12px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--edge)}
+
+/* contact */
+.contact{text-align:center;padding:clamp(36px,6vw,64px) 24px}
+.contact h2{font-size:clamp(30px,5vw,52px)}
+.contact p{color:var(--ink-2);font-size:17px;margin-top:10px}
+
+/* 404 */
+.nf{margin-top:32px;padding:24px;text-align:center}
+.nf a{color:var(--accent);font-weight:600}
+
+/* footer */
+.footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:48px 0 40px;color:var(--ink-3);font-size:14px}
+.social{display:flex;flex-wrap:wrap;gap:18px}
+.social a:hover{color:var(--ink)}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass,.chip,.btn-ghost{background:var(--glass-strong)}}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Di Nerd Apps LLC", "url": "https://dinerdapps.com", "founder": {"@type": "Person", "name": "Chad Muirhead", "jobTitle": "iOS Engineer"}, "sameAs": ["https://apps.apple.com/us/developer/di-nerd-apps-llc/id1464402590", "https://youtube.com/@dinerdapps", "https://github.com/dinerdyyawdie"]}</script>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+
+<header class="nav-wrap">
+  <nav class="nav glass" aria-label="Main">
+    <a class="brand" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="url(#lg)"/><path d="M12.5 10.5 7 16l5.5 5.5M19.5 10.5 25 16l-5.5 5.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#0FB57E"/><stop offset="1" stop-color="#0A7C8C"/></linearGradient></defs></svg><span>Di Nerd Apps</span></a>
+    <ul class="links">
+      <li><a href="#apps">Apps</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a class="btn btn-sm" href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero container">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="dot"></span>Available for projects &amp; roles</p>
+      <h1>Native iOS apps<br><span class="grad">for real communities.</span></h1>
+      <p class="lede">I'm Chad, an iOS engineer. Di Nerd Apps is my independent studio. I've shipped 60+ SwiftUI apps across iPhone, iPad, Apple TV and iMessage, from live transit trackers to AI food scanners.</p>
+      <div class="cta">
+        <a class="btn" href="#apps">See the apps</a>
+        <a class="btn btn-ghost" href="#contact">Work with me</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="f f0"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/9d/95/b09d9597-a0f3-d4bc-7343-7d2b767ac958/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="NYC Parking Ticket Search app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div><div class="f f1"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1a/c8/92/1ac89232-7e45-430c-27f8-0af644b5a7f6/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/256x256bb.jpg" alt="Jamaica Food AI app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div><div class="f f2"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/96/1f/70/961f706c-2ab7-17de-db17-9b170bbd293d/App_Icon-marketing.lsr/256x256bb.jpg" alt="Yard Dominoes app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div><div class="f f3"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b1/b8/74/b1b87449-2225-68f1-a3f7-b1e6865ed71e/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/256x256bb.jpg" alt="Loodi app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div><div class="f f4"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/38/a0/02/38a002ab-89c4-c7ed-1297-8935d39c8101/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="CT Bus app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div><div class="f f5"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6b/e0/8e/6be08e82-af8b-9df1-3915-792d53cce9c4/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/256x256bb.jpg" alt="Jamaica Plants app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div><div class="f f6"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/56/14/cd/5614cdb5-e956-18be-741b-1cfffaf32581/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/256x256bb.jpg" alt="Likkle app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div><div class="f f7"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ef/2b/08/ef2b081a-6df4-ed8f-3441-9bdb2d4cb290/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="Nuff app icon" width="96" height="96" onerror="this.parentNode.classList.add('noimg');this.remove()"></div></div>
+  </section>
+
+  <section class="container stats-wrap" aria-label="Highlights">
+    <dl class="stats glass">
+      <div><dt>60+</dt><dd>apps on the App Store</dd></div>
+      <div><dt>4</dt><dd>Apple platforms</dd></div>
+      <div><dt>240+</dt><dd>App Store ratings</dd></div>
+      <div><dt>2019</dt><dd>shipping since</dd></div>
+    </dl>
+  </section>
+
+  <section class="container feature" aria-label="Featured app">
+    <a class="feature-card glass" href="https://apps.apple.com/us/app/id1641005995" target="_blank" rel="noopener">
+      <img class="feature-icon" src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/9d/95/b09d9597-a0f3-d4bc-7343-7d2b767ac958/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg" alt="NYC Parking Ticket Search app icon" width="128" height="128" onerror="this.style.visibility='hidden'">
+      <div>
+        <p class="eyebrow">Featured</p>
+        <h2>NYC Parking Ticket Search</h2>
+        <p>Enter a plate, see every ticket. Built on NYC Open Data, it's the studio's most-used app, rated <strong>4.6★ from 65 reviews</strong> and still updated today.</p>
+        <span class="link-arrow">View on the App Store</span>
+      </div>
+    </a>
+  </section>
+
+  <section id="apps" class="container section">
+    <div class="section-head">
+      <h2>Apps</h2>
+      <p>A selection of what's live right now. Tap any app to open it on the App Store.</p>
+    </div>
+    <div class="chips" role="toolbar" aria-label="Filter apps"><button class="chip is-on" data-filter="all" aria-pressed="true">All</button><button class="chip" data-filter="civic" aria-pressed="false">Civic &amp; Open Data</button><button class="chip" data-filter="ai" aria-pressed="false">AI &amp; Camera</button><button class="chip" data-filter="tv" aria-pressed="false">Apple TV</button><button class="chip" data-filter="imessage" aria-pressed="false">iMessage</button><button class="chip" data-filter="family" aria-pressed="false">Family &amp; Culture</button></div>
+    <div class="grid" id="grid">
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id1641005995" target="_blank" rel="noopener">
+      <div class="icon" data-initials="NP"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/9d/95/b09d9597-a0f3-d4bc-7343-7d2b767ac958/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>NYC Parking Ticket Search</h3>
+        <p>Find and track every NYC parking ticket from just a license plate.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul><span class="rating" aria-label="Rated 4.6 out of 5 from 65 ratings">★ 4.6 <small>(65)</small></span></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id6761376103" target="_blank" rel="noopener">
+      <div class="icon" data-initials="CB"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/38/a0/02/38a002ab-89c4-c7ed-1297-8935d39c8101/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>CT Bus</h3>
+        <p>Live positions for every CT Transit bus, powered by GTFS-Realtime.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id6761348766" target="_blank" rel="noopener">
+      <div class="icon" data-initials="CT"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/68/0c/90/680c9098-6d54-813e-935d-563b5d8b380f/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>CT Trains</h3>
+        <p>Hartford Line trains on a live map, with delay predictions and countdowns.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id6759580502" target="_blank" rel="noopener">
+      <div class="icon" data-initials="3N"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7c/0c/b9/7c0cb956-f7bb-ba3b-0e5a-cd9534ee19d3/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>311 NYC</h3>
+        <p>Browse, search and follow NYC 311 service requests near you.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id1642003243" target="_blank" rel="noopener">
+      <div class="icon" data-initials="NJ"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c7/62/d4/c762d4ef-0b8c-bf48-3450-33f2737eaa19/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>NYC Jobs</h3>
+        <p>Search open New York City government jobs in a clean, fast app.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id1644566054" target="_blank" rel="noopener">
+      <div class="icon" data-initials="CS"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6e/ac/40/6eac401e-4f26-2073-0fa2-4472b2556cba/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>CT State Expenses</h3>
+        <p>See where Connecticut spends its money, straight from open state data.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id6760506085" target="_blank" rel="noopener">
+      <div class="icon" data-initials="UD"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/e0/18/1d/e0181d8e-a384-505d-ae73-83995c54e032/App_Icon-marketing.lsr/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>US Debt Checker</h3>
+        <p>A live U.S. national debt clock built on official Treasury data.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>Apple TV</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id6761303219" target="_blank" rel="noopener">
+      <div class="icon" data-initials="BC"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/62/c3/f3/62c3f3b2-141f-f8e5-b7e9-d7d3ca018dcf/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Bloomfield CT</h3>
+        <p>Trash-day reminders, town events and meeting agendas for Bloomfield.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="civic" href="https://apps.apple.com/us/app/id1644617628" target="_blank" rel="noopener">
+      <div class="icon" data-initials="NE"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6e/29/3e/6e293e7e-5d74-8bc8-0ecd-346f69e522d9/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>NYC Emergency</h3>
+        <p>NYC emergency notifications and weather alerts in one simple app.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="ai" href="https://apps.apple.com/us/app/id6762490212" target="_blank" rel="noopener">
+      <div class="icon" data-initials="JF"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1a/c8/92/1ac89232-7e45-430c-27f8-0af644b5a7f6/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Jamaica Food AI</h3>
+        <p>Snap a plate of yaad food and get the dish, portion and calories.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="ai" href="https://apps.apple.com/us/app/id6761953752" target="_blank" rel="noopener">
+      <div class="icon" data-initials="JP"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6b/e0/8e/6be08e82-af8b-9df1-3915-792d53cce9c4/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Jamaica Plants</h3>
+        <p>Point your camera at a leaf or flower to identify 30,000+ species.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="ai" href="https://apps.apple.com/us/app/id6762029620" target="_blank" rel="noopener">
+      <div class="icon" data-initials="JP"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/5a/ef/37/5aef3734-32e3-6338-249b-9bd130026536/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Jamaica Patois Translator</h3>
+        <p>AI translation between English and Patois, with the culture behind it.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="ai" href="https://apps.apple.com/us/app/id1603160785" target="_blank" rel="noopener">
+      <div class="icon" data-initials="N"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ef/2b/08/ef2b081a-6df4-ed8f-3441-9bdb2d4cb290/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Nuff</h3>
+        <p>Hear it, find it. Identify any song around you with ShazamKit.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li></ul><span class="rating" aria-label="Rated 5.0 out of 5 from 17 ratings">★ 5.0 <small>(17)</small></span></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="tv" href="https://apps.apple.com/us/app/id6788988967" target="_blank" rel="noopener">
+      <div class="icon" data-initials="YD"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/96/1f/70/961f706c-2ab7-17de-db17-9b170bbd293d/App_Icon-marketing.lsr/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Yard Dominoes</h3>
+        <p>Caribbean partner dominoes. The TV is the table, your iPhone is your hand.</p>
+        <div class="meta"><ul class="plats"><li>Apple TV</li><li>iPhone</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="tv" href="https://apps.apple.com/us/app/id6791249796" target="_blank" rel="noopener">
+      <div class="icon" data-initials="SN"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/97/23/46/972346f3-7e01-5a85-18a7-7a82ecad34cc/App_Icon-marketing.lsr/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Snake N Ladda</h3>
+        <p>Snakes &amp; Ladders for family night on the biggest screen in the house.</p>
+        <div class="meta"><ul class="plats"><li>Apple TV</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="tv" href="https://apps.apple.com/us/app/id6762379965" target="_blank" rel="noopener">
+      <div class="icon" data-initials="JT"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d4/96/45/d4964583-74e2-5f76-42fd-11a055c0ad97/App_Icon-marketing.lsr/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Jamaica Trivia</h3>
+        <p>Test what you know about Jamaica&#x27;s history, culture and geography.</p>
+        <div class="meta"><ul class="plats"><li>Apple TV</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="tv" href="https://apps.apple.com/us/app/id6762518555" target="_blank" rel="noopener">
+      <div class="icon" data-initials="JC"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/60/5d/a9/605da9f4-76c1-573f-5a7f-f58be346af3b/App_Icon-marketing.lsr/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Jamaica Cookbook</h3>
+        <p>Oxtail, curry goat, ackee and saltfish, step by step from the couch.</p>
+        <div class="meta"><ul class="plats"><li>Apple TV</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="imessage" href="https://apps.apple.com/us/app/id6791026064" target="_blank" rel="noopener">
+      <div class="icon" data-initials="L"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b1/b8/74/b1b87449-2225-68f1-a3f7-b1e6865ed71e/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Loodi</h3>
+        <p>Jamaican Ludi, played turn by turn right inside the group chat.</p>
+        <div class="meta"><ul class="plats"><li>iMessage</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="imessage" href="https://apps.apple.com/us/app/id6794666174" target="_blank" rel="noopener">
+      <div class="icon" data-initials="SN"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/81/d0/48/81d0483a-8103-9fd5-9650-0909074f4af5/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Snake N Laddaz</h3>
+        <p>Snakes &amp; Ladders that lives in your Messages thread.</p>
+        <div class="meta"><ul class="plats"><li>iMessage</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="imessage" href="https://apps.apple.com/us/app/id6796129003" target="_blank" rel="noopener">
+      <div class="icon" data-initials="GL"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/5b/ba/c4/5bbac48d-2da0-9231-154a-de4ecd1cfff3/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Groceryy List</h3>
+        <p>One shared grocery list the whole household edits in Messages.</p>
+        <div class="meta"><ul class="plats"><li>iMessage</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="imessage" href="https://apps.apple.com/us/app/id6801350657" target="_blank" rel="noopener">
+      <div class="icon" data-initials="PT"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/38/83/97/388397c3-33d9-e723-307e-3af64cb94a00/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Patois Translate</h3>
+        <p>Type in English, send real Patwa, without leaving iMessage.</p>
+        <div class="meta"><ul class="plats"><li>iMessage</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="imessage" href="https://apps.apple.com/us/app/id6796439799" target="_blank" rel="noopener">
+      <div class="icon" data-initials="B"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/5d/73/30/5d73304d-33b9-6b37-998a-e23bb619575b/AppIcon-0-0-1x_U007epad-0-1-85-220.jpeg/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Bibi</h3>
+        <p>A shared baby log for the family thread. No account, no server.</p>
+        <div class="meta"><ul class="plats"><li>iMessage</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="family" href="https://apps.apple.com/us/app/id6796399041" target="_blank" rel="noopener">
+      <div class="icon" data-initials="L"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/56/14/cd/5614cdb5-e956-18be-741b-1cfffaf32581/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Likkle</h3>
+        <p>A newborn tracker made for one-handed logging at 3 a.m. Private by default.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li></ul></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="family" href="https://apps.apple.com/us/app/id6504817643" target="_blank" rel="noopener">
+      <div class="icon" data-initials="HM"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ae/f4/9c/aef49cfe-aaa3-a74a-6828-c41ebdd66d31/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Happy Mothers Day +</h3>
+        <p>Animated cards, quotes and stickers to celebrate Mom.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li><li>iMessage</li></ul><span class="rating" aria-label="Rated 5.0 out of 5 from 32 ratings">★ 5.0 <small>(32)</small></span></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="family" href="https://apps.apple.com/us/app/id6503324541" target="_blank" rel="noopener">
+      <div class="icon" data-initials="HF"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ff/51/c0/ff51c0ef-6bb0-0bb6-b146-f04d2832ce63/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Happy Fathers Day +</h3>
+        <p>Images, dad jokes and stickers for Father&#x27;s Day.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li><li>iMessage</li></ul><span class="rating" aria-label="Rated 4.8 out of 5 from 21 ratings">★ 4.8 <small>(21)</small></span></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    <a class="app glass" data-cat="family" href="https://apps.apple.com/us/app/id6503253655" target="_blank" rel="noopener">
+      <div class="icon" data-initials="JD"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/7e/ef/73/7eef7368-2899-b2d2-abbb-4cc8633e2885/AppIcon-0-0-1x_U007epad-0-1-85-220.png/256x256bb.jpg" alt="" loading="lazy" width="72" height="72" onerror="this.remove()"></div>
+      <div class="app-body">
+        <h3>Juneteenth Day</h3>
+        <p>The history and meaning of Juneteenth, with stickers to share.</p>
+        <div class="meta"><ul class="plats"><li>iPhone</li><li>iPad</li><li>iMessage</li></ul><span class="rating" aria-label="Rated 4.6 out of 5 from 20 ratings">★ 4.6 <small>(20)</small></span></div>
+      </div>
+      <span class="get" aria-hidden="true">View</span>
+    </a>
+    </div>
+    <p class="more"><a class="link-arrow" href="https://apps.apple.com/us/developer/di-nerd-apps-llc/id1464402590" target="_blank" rel="noopener">See all 60+ apps on the App Store</a></p>
+  </section>
+
+  <section id="services" class="container section">
+    <div class="section-head">
+      <h2>What I build</h2>
+      <p>Freelance work, consulting and full-time roles. Clean, native, and built to last.</p>
+    </div>
+    <div class="services">
+      <article class="svc glass">
+        <div class="svc-ico"><svg viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></div>
+        <h3>Native iOS apps</h3>
+        <p>SwiftUI apps from idea to App Store, with clean architecture, accessibility and App Store review handled.</p>
+      </article>
+      <article class="svc glass">
+        <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></svg></div>
+        <h3>Civic &amp; open-data apps</h3>
+        <p>Public datasets and live feeds like GTFS-Realtime and city open data, made into apps residents actually use.</p>
+      </article>
+      <article class="svc glass">
+        <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></div>
+        <h3>AI features</h3>
+        <p>Camera recognition, on-device models and LLM-powered translation, added where they genuinely help.</p>
+      </article>
+      <article class="svc glass">
+        <div class="svc-ico"><svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="12" rx="2.5"/><path d="M8 20h8"/></svg></div>
+        <h3>Beyond the iPhone</h3>
+        <p>iMessage apps, Apple TV games with iPhone controllers, iPad layouts and widgets.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="container section">
+    <div class="about glass">
+      <div class="about-copy">
+        <h2>About</h2>
+        <p>I'm <strong>Chad Muirhead</strong>, a Jamaican-born iOS engineer based in Bloomfield, Connecticut. I started Di Nerd Apps in 2019 to build the apps I wished existed: tools that make city data easy to use, and apps that celebrate Caribbean culture.</p>
+        <p>I also teach SwiftUI on YouTube and spoke at <strong>CTData 2026</strong> on building your own apps and databases with AI.</p>
+        <ul class="tags">
+          <li>Swift</li><li>SwiftUI</li><li>UIKit</li><li>tvOS</li><li>Messages framework</li><li>ShazamKit</li><li>Core ML &amp; Vision</li><li>Firebase</li><li>REST &amp; GTFS-RT</li><li>CI &amp; TestFlight</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="container section">
+    <div class="contact glass">
+      <h2>Let's build something.</h2>
+      <p>Have an app idea, a civic data project or a role to fill? Reach out on any of these.</p>
+      <div class="cta center">
+        <a class="btn" href="https://youtube.com/@dinerdapps" target="_blank" rel="noopener">YouTube</a>
+        <a class="btn btn-ghost" href="https://github.com/dinerdyyawdie" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://www.tiktok.com/@di_nerd" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="container footer">
+  <p>© <span id="yr">2026</span> Di Nerd Apps LLC · Bloomfield, CT</p>
+  <ul class="social">
+    <li><a href="https://apps.apple.com/us/developer/di-nerd-apps-llc/id1464402590" target="_blank" rel="noopener">App Store</a></li>
+    <li><a href="https://youtube.com/@dinerdapps" target="_blank" rel="noopener">YouTube</a></li>
+    <li><a href="https://github.com/dinerdyyawdie" target="_blank" rel="noopener">GitHub</a></li>
+    <li><a href="https://www.tiktok.com/@di_nerd" target="_blank" rel="noopener">TikTok</a></li>
+    <li><a href="https://twitter.com/DiNerdApps" target="_blank" rel="noopener">X</a></li>
+  </ul>
+</footer>
+<script>(()=>{const chips=document.querySelectorAll('.chip'),apps=document.querySelectorAll('.app');
+chips.forEach(c=>c.addEventListener('click',()=>{const f=c.dataset.filter;
+chips.forEach(x=>{const on=x===c;x.classList.toggle('is-on',on);x.setAttribute('aria-pressed',on)});
+apps.forEach(a=>{a.hidden=!(f==='all'||a.dataset.cat===f)})}));
+const y=document.getElementById('yr');if(y)y.textContent=new Date().getFullYear();})();
+</script>
+</body>
+</html>
