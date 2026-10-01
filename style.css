@@ -167,3 +167,18 @@ a:hover .link-arrow::after,.link-arrow:hover::after{transform:translateX(3px)}
 .social a:hover{color:var(--ink)}
 
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass,.chip,.btn-ghost{background:var(--glass-strong)}}
+
+/* Connectors */
+.conns{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.conn{display:flex;gap:16px;align-items:flex-start;padding:22px}
+.conn-ico{width:64px;height:64px;border-radius:15px;flex:none;box-shadow:0 8px 18px -8px rgba(0,0,0,.35)}
+.conn h3{font-size:18px;font-weight:650}
+.conn p{color:var(--ink-2);font-size:14.5px;margin-top:4px;line-height:1.45}
+.conn-links{display:flex;gap:14px;margin-top:10px!important}
+.conn-links a{color:var(--accent);font-weight:600;font-size:14px}
+.conn-links a:hover{text-decoration:underline}
+.conn-support{margin-top:16px;padding:22px 24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.conn-support h3{font-size:18px;font-weight:650}
+.conn-support p{color:var(--ink-2);font-size:14.5px;margin-top:2px}
+@media (max-width:560px){.conn-support .btn{width:100%}}
+@media (prefers-color-scheme:dark){.conn-ico{box-shadow:0 0 0 1px rgba(255,255,255,.14),0 8px 18px -8px rgba(0,0,0,.6)}}
